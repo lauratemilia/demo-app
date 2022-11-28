@@ -5,7 +5,23 @@ import UserItem from "./UserItem"
 
 class  UserList extends React.Component{  
 
+    
+  componentDidMount(){
+    console.log("UserList component din mount")
+  }
+
+  componentWillUnmount(){
+    console.log("UserList components will unmount")
+  }
+
+  componentDidUpdate(){
+
+    console.log("UserList component was updated")
+  }
+  
+
     render(){
+        console.log("UserList component was rendered")
         const {users} = this.props
         return(
             <div>

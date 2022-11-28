@@ -8,6 +8,7 @@ import UserList from './components/UserList';
 class App extends React.Component {
   constructor(){
     super();
+    console.log("App constructor called")
     this.state = {
       background:'white',
       color: "black",
@@ -46,9 +47,23 @@ class App extends React.Component {
     console.log(event.target.value);
     this.setState({color: event.target.value})
   }
+
+  componentDidMount(){
+    console.log("App component din mount")
+  }
+
+  componentWillUnmount(){
+    console.log("App components will unmount")
+  }
+
+  componentDidUpdate(){
+
+    console.log("App component was updated")
+  }
   
 
   render(){
+    console.log("App render() called")
     return (
       <div className="App" style={{background:this.state.background, color:this.state.color}}>
               CURS02
