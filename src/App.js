@@ -1,11 +1,8 @@
 import React from 'react';
 import './App.css';
-import UserItem from './components/UserItem';
-import stelica1 from "./assets/images/stelica1.jpg";
-import stelica2 from "./assets/images/stelica2.jpg";
-import stelica3 from "./assets/images/stelica3.jpg";
 import UserAddForm from './components/UserAddForm';
 import {LoginControl} from './components/LoginControl';
+import UserList from './components/UserList';
 
 
 class App extends React.Component {
@@ -13,7 +10,30 @@ class App extends React.Component {
     super();
     this.state = {
       background:'white',
-      color: "black"
+      color: "black",
+      users:[
+        {
+          name: 'petrica',
+          email: 'petrica@ex.com',
+          salary: '3500$',
+          picture: require("./assets/images/stelica1.jpg"),
+          isGoldClient: false
+        },
+        {
+          name: 'stelica',
+          email: 'stelica@ex.com',
+          salary: '3500$',
+          picture: require("./assets/images/stelica2.jpg"),
+          isGoldClient: true
+        },
+        {
+          name: 'tzitzi',
+          email: 'tzitzi@ex.com',
+          salary: '3500$',
+          picture: require("./assets/images/stelica3.jpg"),
+          isGoldClient: true
+        },
+      ]
     };
   }
 
@@ -33,9 +53,7 @@ class App extends React.Component {
       <div className="App" style={{background:this.state.background, color:this.state.color}}>
               CURS02
               <div><LoginControl name = "GoldMemeber"/></div>
-              <div><UserItem name="petrica" email="petrica@ex.com" salary="3500$" picture = {stelica1}/></div>
-              <div><UserItem name="stelica" email="stelica@ex.com" salary="3500$" picture = {stelica2}/></div>
-              <div><UserItem name="tzitzi" email="tzitzi@ex.com" salary="3500$" picture = {stelica3}/></div>
+              <div><UserList users = {this.state.users}/></div>
 
               <div><UserAddForm/></div>
               <label> change background color: 
