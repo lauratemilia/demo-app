@@ -12,7 +12,29 @@ class App extends React.Component {
     this.state = {
       background:'white',
       color: "black",
-      users:[],
+      users:[
+        {
+          name: 'petrica',
+          email: 'petrica@ex.com',
+          salary: '3500$',
+          picture: require("./assets/images/stelica1.jpg"),
+          isGoldClient: false
+        },
+        {
+          name: 'stelica',
+          email: 'stelica@ex.com',
+          salary: '3500$',
+          picture: require("./assets/images/stelica2.jpg"),
+          isGoldClient: true
+        },
+        {
+          name: 'tzitzi',
+          email: 'tzitzi@ex.com',
+          salary: '3500$',
+          picture: require("./assets/images/stelica3.jpg"),
+          isGoldClient: true
+        }
+      ],
       posts:[]
     };
   }
@@ -38,12 +60,6 @@ class App extends React.Component {
   }
 
   componentDidMount(){    
-    fetch('https://jsonplaceholder.typicode.com/users')
-    .then(response => {return response.json()})
-    .then(data => {  
-      this.setState({users: data});      
-    })
-
     fetch('https://jsonplaceholder.typicode.com/posts')
     .then(response => {return response.json()})
     .then(data => {
@@ -63,18 +79,17 @@ class App extends React.Component {
     
     return (
       <div className="App" style={{background:this.state.background, color:this.state.color}}>
-              CURS02
-              <div><LoginControl name = "GoldMemeber"/></div>
+              <h2>KittyClass Romania</h2>
+              <p>Cel mai exclusivist club felin din Romania</p>
+              {/* <div><LoginControl name = "GoldMemeber"/></div> */}
 
               <button id="showUsersButton" onClick={this.showUsers}>Show Users</button>
-              <br/><br/>
               <button id="showwPostsButton" onClick={this.showPosts}>Show Posts</button>
-              <br/><br/>
 
               <div id="usersList" style={{dispplay:"block"}}><UserList users = {this.state.users}/></div>
-              <div id="postsList" style={{dispplay:"none"}}><PostList posts = {this.state.posts}/></div>
+              <div id="postsList" style={{display:"none"}}><PostList posts = {this.state.posts}/></div>
 
-              {/* <div><UserAddForm/></div> */}
+              <div className="user-add-form"><UserAddForm/></div>
               <label> change background color: 
               <input type = "color" onChange={(event) => this.backgroundCangeColor(event)}/></label>
               <br/><br/>

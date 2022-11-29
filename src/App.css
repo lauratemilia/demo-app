@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  margin: 20px;
+  padding: 20px;
+
 }
 
 .App-logo {
@@ -34,5 +37,50 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+#user, #post {
+  display: inline-block;
+  padding: 10px;
+  margin:10px;
+  border: 1px solid black;
+}
+
+.users, .posts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+#user div div {
+  display: inline-block;
+  width: 45%;
+  margin: 10px;
+}
+
+
+
+#post {
+  background-color: #a2b1fc;
+}
+
+#post div {
+  width: -moz-fit-content;
+  width: fit-content; 
+  padding: 5px;
+  margin-bottom: 1em;
+}
+
+.gold {
+  background-color: #FFD700;
+}
+
+
+@media screen and (max-width:800px) {
+  .users, .posts {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px;
   }
 }
