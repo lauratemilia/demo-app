@@ -3,38 +3,17 @@ import './App.css';
 import UserAddForm from './components/UserAddForm';
 import {LoginControl} from './components/LoginControl';
 import UserList from './components/UserList';
+import PostList from './components/PostList';
 
 
 class App extends React.Component {
   constructor(){
     super();
-    console.log("App constructor called")
     this.state = {
       background:'white',
       color: "black",
-      users:[
-        {
-          name: 'petrica',
-          email: 'petrica@ex.com',
-          salary: '3500$',
-          picture: require("./assets/images/stelica1.jpg"),
-          isGoldClient: false
-        },
-        {
-          name: 'stelica',
-          email: 'stelica@ex.com',
-          salary: '3500$',
-          picture: require("./assets/images/stelica2.jpg"),
-          isGoldClient: true
-        },
-        {
-          name: 'tzitzi',
-          email: 'tzitzi@ex.com',
-          salary: '3500$',
-          picture: require("./assets/images/stelica3.jpg"),
-          isGoldClient: true
-        },
-      ]
+      users:[],
+      posts:[]
     };
   }
 
@@ -48,29 +27,54 @@ class App extends React.Component {
     this.setState({color: event.target.value})
   }
 
-  componentDidMount(){
-    console.log("App component din mount")
+  showUsers(){
+    document.getElementById("postsList").style.display = "none"
+    document.getElementById("usersList").style.display = "block"
+  }
+
+  showPosts(){
+    document.getElementById("usersList").style.display = "none"
+    document.getElementById("postsList").style.display = "block"
+  }
+
+  componentDidMount(){    
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(response => {return response.json()})
+    .then(data => {  
+      this.setState({users: data});      
+    })
+
+    fetch('https://jsonplaceholder.typicode.com/posts')
+    .then(response => {return response.json()})
+    .then(data => {
+      this.setState({posts: data});      
+    })
   }
 
   componentWillUnmount(){
-    console.log("App components will unmount")
   }
 
   componentDidUpdate(){
 
-    console.log("App component was updated")
   }
   
 
   render(){
-    console.log("App render() called")
+    
     return (
       <div className="App" style={{background:this.state.background, color:this.state.color}}>
               CURS02
               <div><LoginControl name = "GoldMemeber"/></div>
-              <div><UserList users = {this.state.users}/></div>
 
-              <div><UserAddForm/></div>
+              <button id="showUsersButton" onClick={this.showUsers}>Show Users</button>
+              <br/><br/>
+              <button id="showwPostsButton" onClick={this.showPosts}>Show Posts</button>
+              <br/><br/>
+
+              <div id="usersList" style={{dispplay:"block"}}><UserList users = {this.state.users}/></div>
+              <div id="postsList" style={{dispplay:"none"}}><PostList posts = {this.state.posts}/></div>
+
+              {/* <div><UserAddForm/></div> */}
               <label> change background color: 
               <input type = "color" onChange={(event) => this.backgroundCangeColor(event)}/></label>
               <br/><br/>

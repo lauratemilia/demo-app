@@ -3,25 +3,62 @@ import React from "react"
 import UserItem from "./UserItem"
 
 
-class  UserList extends React.Component{  
+class  UserList extends React.Component {  
 
+  // constructor(){
+  //   super();
+  //   this.state = {
+  //     users:[
+  //       {
+  //         name: 'petrica',
+  //         email: 'petrica@ex.com',
+  //         salary: '3500$',
+  //         picture: require("./../assets/images/stelica1.jpg"),
+  //         isGoldClient: false
+  //       },
+  //       {
+  //         name: 'stelica',
+  //         email: 'stelica@ex.com',
+  //         salary: '3500$',
+  //         picture: require("./../assets/images/stelica2.jpg"),
+  //         isGoldClient: true
+  //       },
+  //       {
+  //         name: 'tzitzi',
+  //         email: 'tzitzi@ex.com',
+  //         salary: '3500$',
+  //         picture: require("./../assets/images/stelica3.jpg"),
+  //         isGoldClient: true
+  //       }
+  //     ],
+  //   }
+  // }
     
   componentDidMount(){
-    console.log("UserList component din mount")
+    console.log("Fetching users")
+    // fetch('https://jsonplaceholder.typicode.com/users')
+    // .then(response => response.json())
+    // .then(data => {      
+    //   this.setState({users: data});      
+    // })
   }
 
   componentWillUnmount(){
-    console.log("UserList components will unmount")
   }
 
   componentDidUpdate(){
 
-    console.log("UserList component was updated")
   }
   
+  
+  showUsers(){
+    console.log("users\n")
+    return <div id="usersList" ><UserList users = {this.state.users}/></div>
+    
+  }
+
 
     render(){
-        console.log("UserList component was rendered")
         const {users} = this.props
         return(
             <div>
@@ -30,9 +67,9 @@ class  UserList extends React.Component{
                         return <UserItem
                         name = {user.name}
                         email = {user.email}
-                        salary = {user.salary}
-                        picture = {user.picture}
-                        isGoldClient = {user.isGoldClient}
+                        // salary = {user.salary}
+                        // picture = {user.picture}
+                        // isGoldClient = {user.isGoldClient}
                         key = {user.name.toString()}                
                     />               
                 })}           
