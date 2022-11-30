@@ -1,0 +1,37 @@
+validateInputFields(e) {
+        e.preventDefault();
+     
+        const errors = {
+            name:"",
+            email:"",
+            salary:""
+        }
+
+        console.log(e.target.id === "name")
+        if(e.target.id === "name"){
+            console.log(e.target.value)
+            if(this.isEmpty(e.target.value)){
+                errors.name = "Name cannot be empty!"
+                return false;
+            }
+        }
+
+        // if(e.target.id === "email"){
+        //     if(e.target.value.trim === "" || !this.isEmail(e.target.value)){
+        //         alert("Email format is not valid!")
+        //         return;
+        //     }
+        // }
+
+
+        // if(e.target.id === "salary"){
+        //     if(e.target.value.trim === ""){
+        //         alert("Salary can only contain numbers and is displayed in Є!")
+        //         return;
+        //     }
+        // }
+
+        console.log(errors)
+        this.setState({errors: errors}) 
+     
+      };

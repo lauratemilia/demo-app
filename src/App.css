@@ -76,6 +76,13 @@
   background-color: #FFD700;
 }
 
+.form-control {
+  border: 1px solid black
+}
+
+.error-control {
+  border: 1px solid red
+}
 
 @media screen and (max-width:800px) {
   .users, .posts {
