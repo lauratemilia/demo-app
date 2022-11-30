@@ -21,7 +21,7 @@ class UserItem extends React.Component{
     handleDeleteUser(e){
         e.preventDefault();
         console.log(e.target.value)
-        this.props.filterUser(e.target.value);
+        this.props.deleteUser(e.target.value);
     }
 
     render(){

@@ -102,7 +102,8 @@ class App extends React.Component {
 
   deleteUser(username){
     const usersArr = [...this.state.users];
-    const index = usersArr.indexOf(username)
+    const index = usersArr.findIndex(user => user.name === username)
+    console.log(index)
     if(index !== -1){
       usersArr.splice(index, 1);
       this.setState({users: usersArr});
@@ -128,7 +129,6 @@ class App extends React.Component {
   
 
   render(){
-    console.log(this.state.users.length)
     return (
       <div className="App" style={{background:this.state.background, color:this.state.color}}>
               <h2>KittyClass Romania</h2>
