@@ -39,8 +39,31 @@ class App extends React.Component {
     };
   }
 
-  backgroundCangeColor(event) {
-    console.log(event.target.value);
+  submitAddForm(event, name, email, salary, picture, isGoldClient){
+    event.preventDefault();
+    this.setState(previousState => {
+      return {
+        users: [
+          previousState.users,
+          {
+            name: 'pufulet',
+            email: 'pufulet@ex.com',
+            salary: '3500$',
+            picture: require("./assets/images/stelica2.jpg"),
+            isGoldClient: false
+          }
+        ]
+      }
+    }
+
+
+
+    );
+
+  }
+
+  backgroundCangeColor(event) {    
+    //setState is async
     this.setState({background: event.target.value})
   }
 
@@ -67,16 +90,19 @@ class App extends React.Component {
     })
   }
 
-  componentWillUnmount(){
-  }
+  updateUsersList(user){
 
-  componentDidUpdate(){
-
+    //don't use this.state as a change value for the setState function
+    this.setState(prevState => {
+      return {users: [
+        ...prevState.users, 
+        user]}
+    })
   }
   
 
   render(){
-    
+    console.log(this.state.users);
     return (
       <div className="App" style={{background:this.state.background, color:this.state.color}}>
               <h2>KittyClass Romania</h2>
@@ -89,7 +115,7 @@ class App extends React.Component {
               <div id="usersList" style={{dispplay:"block"}}><UserList users = {this.state.users}/></div>
               <div id="postsList" style={{display:"none"}}><PostList posts = {this.state.posts}/></div>
 
-              <div className="user-add-form"><UserAddForm/></div>
+              <div className="user-add-form"><UserAddForm updateUsersList={(user) => {this.updateUsersList(user)}}/></div>
               <label> change background color: 
               <input type = "color" onChange={(event) => this.backgroundCangeColor(event)}/></label>
               <br/><br/>

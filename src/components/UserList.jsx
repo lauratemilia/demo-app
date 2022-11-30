@@ -29,18 +29,21 @@ class  UserList extends React.Component {
     render(){
         const {users} = this.props
         return(
-            <div className="users">
-                {users.map((user, index) => 
-                    {   
-                        return <UserItem
-                        name = {user.name}
-                        email = {user.email}
-                        salary = {user.salary}
-                        picture = {user.picture}
-                        isGoldClient = {user.isGoldClient}
-                        key = {user.name.toString()}                
-                    />               
-                })}           
+            <div>
+                <h2>Lista utilizatori</h2>
+                <div className="users">                
+                    {users.map((user, index) => 
+                        {   
+                            return <UserItem
+                            name = {user.name}
+                            email = {user.email}
+                            salary = {user.salary}
+                            picture = {user.picture}
+                            isGoldClient = {user.isGoldClient}
+                            key = {user.name.toString()}                
+                        />               
+                    })}           
+                </div>
             </div>
 
        )
