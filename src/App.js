@@ -99,10 +99,36 @@ class App extends React.Component {
         user]}
     })
   }
+
+  deleteUser(username){
+    const usersArr = [...this.state.users];
+    const index = usersArr.indexOf(username)
+    if(index !== -1){
+      usersArr.splice(index, 1);
+      this.setState({users: usersArr});
+    }
+  }
+
+  filterUser(username){
+    this.setState((prevState) => {
+      
+      return {
+         users: [
+          ...prevState.users.filter(
+            function(user) {
+              console.log(username)
+              console.log(user.name)
+              return user.name !== username}
+           )
+         ]
+      }
+    }  
+  );
+  }
   
 
   render(){
-    console.log(this.state.users);
+    console.log(this.state.users.length)
     return (
       <div className="App" style={{background:this.state.background, color:this.state.color}}>
               <h2>KittyClass Romania</h2>
@@ -112,7 +138,7 @@ class App extends React.Component {
               <button id="showUsersButton" onClick={this.showUsers}>Show Users</button>
               <button id="showwPostsButton" onClick={this.showPosts}>Show Posts</button>
 
-              <div id="usersList" style={{dispplay:"block"}}><UserList users = {this.state.users}/></div>
+              <div id="usersList" style={{dispplay:"block"}}><UserList users = {this.state.users} deleteUser={(username) => {this.deleteUser(username)}} filterUser={(username) => {this.filterUser(username)}}/></div>
               <div id="postsList" style={{display:"none"}}><PostList posts = {this.state.posts}/></div>
 
               <div className="user-add-form"><UserAddForm updateUsersList={(user) => {this.updateUsersList(user)}}/></div>

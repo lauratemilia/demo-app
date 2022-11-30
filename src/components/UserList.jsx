@@ -5,6 +5,10 @@ import UserItem from "./UserItem"
 
 class  UserList extends React.Component {  
 
+    constructor(props){
+        super(props)
+    }
+
  
     
   componentDidMount(){
@@ -20,14 +24,15 @@ class  UserList extends React.Component {
   
   
   showUsers(){
-    console.log("users\n")
     return <div id="usersList" ><UserList users = {this.state.users}/></div>
     
   }
 
 
     render(){
+        
         const {users} = this.props
+  
         return(
             <div>
                 <h2>Lista utilizatori</h2>
@@ -40,6 +45,8 @@ class  UserList extends React.Component {
                             salary = {user.salary}
                             picture = {user.picture}
                             isGoldClient = {user.isGoldClient}
+                            deleteUser = {this.props.deleteUser}
+                            filterUser = {this.props.filterUser}
                             key = {user.name.toString()}                
                         />               
                     })}           

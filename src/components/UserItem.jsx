@@ -18,6 +18,12 @@ class UserItem extends React.Component{
        return props.isGoldClient === true? "Gold" : "Regular"
     }
 
+    handleDeleteUser(e){
+        e.preventDefault();
+        console.log(e.target.value)
+        this.props.filterUser(e.target.value);
+    }
+
     render(){
         return (
             <div id="user" className={this.state.clientType}>
@@ -27,8 +33,9 @@ class UserItem extends React.Component{
                     <h4 >{this.isGoldClientFunc(this.props)}</h4>
                     <p>{this.props.email}<span> ( {this.props.salary} )</span></p>
                    </div>
-                   <div id="userImg"><img src={this.props.picture} alt = "" width = "100" height="150"/></div>
+                   <div id="userImg"><img src={this.props.picture} alt = "" width = "100" height="150"/></div> 
                 </div>
+                <button value={this.props.name} onClick={(e) => this.handleDeleteUser(e)}>Delete</button>
             </div>
         ); 
       }           
