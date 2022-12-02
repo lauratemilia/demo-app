@@ -3,12 +3,19 @@ import React from "react";
 import CurrencyInput from 'react-currency-input-field';
 
 function validate(name, email, salary) {
-    // true means invalid, so our conditions got reversed
     return {      
-      name: {value: name.length === 0, message:"Invalid email"},
-      email: {value: email.length === 0, message:"Invalid name"},
-      salary: {value: salary.length === 0, message:"Invalid salary"}
+      name: {value: validateInputNotEmpty(name), message:"Name cannot be empty"},
+      email: {value: validateEmail(email), message:"Invalid email"},
+      salary: {value: validateInputNotEmpty(salary), message:"Salary cannot be empty"}
     };
+  }
+
+  function validateEmail(email){
+    return (email.length !== 0) && (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email));
+  }
+
+  function validateInputNotEmpty(input) {
+    return input.trim().length === 0;
   }
 
 class UserAddForm extends React.Component{
@@ -19,13 +26,19 @@ class UserAddForm extends React.Component{
             name:'',
             email: '',
             salary: '',
-            isGoldClient: false
+            isGoldClient: false,
+            errors: {
+              name: "",
+              email:"",
+              salary:""
+            }
+            
         }
       }
 
       handleSubmit(e) {
         e.preventDefault();
-        if (!this.canBeSubmitted()) {
+        if (this.canBeSubmitted()) {
             e.preventDefault();
             return;
         }
@@ -39,8 +52,6 @@ class UserAddForm extends React.Component{
         this.props.updateUsersList(newUser)
       }
 
-      isEmail(email) {/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);}
-      isEmpty(input) {return input.trim().length === 0}
 
       handleInputChange(e){
         e.preventDefault();
@@ -56,14 +67,14 @@ class UserAddForm extends React.Component{
  
     
       canBeSubmitted() {
-        const errors = validate(this.state.name, this.state.email, this.state.salary);
-        const isDisabled = Object.keys(errors).some(x => errors[x]);
-        return !isDisabled;
+        const errorsObj = validate(this.state.name, this.state.email, this.state.salary);
+        this.setState({errors:errorsObj});
+        const isDisabled = Object.keys(errorsObj).some(x => errorsObj[x]);
+        return isDisabled;
       }
 
     render(){
-        //TODO: set errors in state and change the state, remove const errors from render method
-        const errors = validate(this.state.name, this.state.email, this.state.salary);
+        const errors = this.state.errors;
         const isDisabled = Object.keys(errors).some(x => errors[x]);
 
         return(
@@ -71,7 +82,7 @@ class UserAddForm extends React.Component{
                     <h3>Adauga un utilizator nou:</h3><br />
                     <label htmlFor="name">Nume:
                         <input type="text"  
-                        className={errors.name ? 'error-control' : 'form-control'}
+                        className= {errors.name ? 'error-control' : 'form-control'}
                         placeholder={errors.name ? errors.name.message : "Enter your name"} 
                         id="name" 
                         name="name" 
