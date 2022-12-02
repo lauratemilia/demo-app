@@ -65,9 +65,9 @@ class UserAddForm extends React.Component{
             name : this.state.name,
             email: this.state.email,
             salary: this.state.salary + '€',
-            isGoldClient: this.state.isGoldClient
+            isGoldClient: this.state.isGoldClient,
+            picture: require("./../assets/images/placeholder.jpg")
         }
-        console.log(newUser)
         this.props.updateUsersList(newUser)
         this.setState(this.initialState)
       }
@@ -108,9 +108,6 @@ class UserAddForm extends React.Component{
     
       canBeSubmitted() {
         const errorsObj = validate(this.state.name, this.state.email, this.state.salary);
-        console.log("errors: \n" + JSON.stringify(errorsObj))
-        console.log("error obj keys: " + JSON.stringify(Object.keys(errorsObj)))
-        console.log(!Object.keys(errorsObj).some(x =>  console.log(errorsObj[x].valid)))
 
         this.setState({errorName:errorsObj.name});
         this.setState({errorEmail:errorsObj.email});
