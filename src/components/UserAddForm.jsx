@@ -1,20 +1,36 @@
 import React from "react";
-import CurrencyInput from 'react-currency-input-field';
 
 function validate(name, email, salary) {
     return {      
-      name: {value: validateInputNotEmpty(name), message:"Name cannot be empty"},
-      email: {value: validateEmail(email), message:"Invalid email"},
-      salary: {value: validateInputNotEmpty(salary), message:"Salary cannot be empty"}
+      name: {valid: validateName(name), errMessage:"Name cannot be empty"},
+      email: {valid: validateEmail(email), errMessage:"Invalid email"},
+      salary: {valid: validateSalary(salary), errMessage:"Salary cannot be empty"}
     };
   }
 
   function validateEmail(email){
-    return (email.length !== 0) && (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email));
+    const isValid = (email.trim().length !== 0) && (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email))
+    return isValid;
   }
 
-  function validateInputNotEmpty(input) {
-    return input.trim().length === 0;
+  function validateName( name) {
+    const isValid = name.trim().length !== 0
+    return isValid;
+  }
+
+  function validateSalary( salary) {
+    const isValid = salary.trim().length !== 0 && (/[0-9]/.test(salary))
+    return isValid;
+  }
+
+  const initialState = {
+      name:'',
+      email: '',
+      salary: '',
+      isGoldClient: false,
+      errorName: {},
+      errorEmail:{},
+      errorSalary: {},
   }
 
 class UserAddForm extends React.Component{
@@ -26,86 +42,129 @@ class UserAddForm extends React.Component{
             email: '',
             salary: '',
             isGoldClient: false,
-            errors: {
-              name: "",
-              email:"",
-              salary:""
-            }
-            
+            errorName: {},
+            errorEmail:{},
+            errorSalary: {},
         }
       }
+
+    
+      componentDidMount() {
+        this.initialState = this.state
+    }
 
       handleSubmit(e) {
         e.preventDefault();
-        if (this.canBeSubmitted()) {
+        if (!this.canBeSubmitted()) {
             e.preventDefault();
+            console.log("cannot be submitted")
             return;
         }
-
+        console.log("this can be submitted")
         const newUser = {
             name : this.state.name,
             email: this.state.email,
-            salary: this.state.salary,
+            salary: this.state.salary + '€',
             isGoldClient: this.state.isGoldClient
         }
+        console.log(newUser)
         this.props.updateUsersList(newUser)
+        this.setState(this.initialState)
       }
 
+      resetState(e){
+        e.preventDefault();
+        console.log("reset: " + e.target.id)
+        
+
+        switch(e.target.id) {
+          case 'name':
+            this.setState({name : initialState.name});
+            this.setState({errorName : initialState.errorName});
+            break;
+          case 'email':
+            this.setState({email : initialState.email});
+            this.setState({errorEmail : initialState.errorEmail});
+            break;
+          case 'salary':
+            this.setState({salary : initialState.salary});
+            this.setState({errorSalary : initialState.errorSalary});
+            break;
+          default:
+            return;
+        }
+      }
 
       handleInputChange(e){
         e.preventDefault();
-       
+
         if(e.target.id === "isGoldClient"){
-            this.setState({[e.target.id]: e.target.checked})
+          this.setState({[e.target.id]: e.target.checked})
         }
-        else{            
-            this.setState({[e.target.id]: e.target.value})
+        else{   
+          this.setState({[e.target.id]: e.target.value})
         }        
       }
-
- 
     
       canBeSubmitted() {
         const errorsObj = validate(this.state.name, this.state.email, this.state.salary);
-        this.setState({errors:errorsObj});
-        const isDisabled = Object.keys(errorsObj).some(x => errorsObj[x]);
-        return isDisabled;
+        console.log("errors: \n" + JSON.stringify(errorsObj))
+        console.log("error obj keys: " + JSON.stringify(Object.keys(errorsObj)))
+        console.log(!Object.keys(errorsObj).some(x =>  console.log(errorsObj[x].valid)))
+
+        this.setState({errorName:errorsObj.name});
+        this.setState({errorEmail:errorsObj.email});
+        this.setState({errorSalary:errorsObj.salary});
+
+        return !Object.keys(errorsObj).some(x => {return errorsObj[x].valid === false;});
       }
 
     render(){
-        const errors = this.state.errors;
-        const isDisabled = Object.keys(errors).some(x => errors[x]);
-
+  
         return(
             <form onSubmit={(e) => {this.handleSubmit(e)}}>
                     <h3>Adauga un utilizator nou:</h3><br />
                     <label htmlFor="name">Nume:
-                        <input type="text"  
-                        className= {errors.name ? 'error-control' : 'form-control'}
-                        placeholder={errors.name ? errors.name.message : "Enter your name"} 
+                        <input type="text"                          
                         id="name" 
                         name="name" 
                         value={this.state.name} 
-                        onChange={(e) => {this.handleInputChange(e)}}/>
+                        onFocus={(e)=>{this.resetState(e)}}
+                        onChange={(e) => {this.handleInputChange(e)}}
+                        className= 'form-control'
+                        placeholder="Enter your name"/> 
+                        {this.state.errorName.valid ? null : <span> {this.state.errorName.errMessage}</span> }                    
                     </label> <br/><br/>
 
                     <label htmlFor="email">Email:
-                        <input type="text" id="email" name="email" value={this.state.email} onChange={(e) => {this.handleInputChange(e)}}
-                         className={errors.email ? 'error-control' : 'form-control'}
-                         placeholder={errors.email ? errors.email.message : "Enter your email"} />
+                        <input type="text" 
+                         id="email" 
+                         name="email" 
+                         value={this.state.email} 
+                         onFocus={(e)=>{this.resetState(e)}} 
+                         onChange={(e) => {this.handleInputChange(e)}}
+                         className= 'form-control'
+                         placeholder="Enter your email" />
+                        {this.state.errorEmail.valid ? null : <span> {this.state.errorEmail.errMessage}</span> }                    
                     </label> <br/><br/>
 
                     <label htmlFor="salary">Salariu:
-                        <CurrencyInput id="salary" name="salary" decimalsLimit={2} suffix="€" value={this.state.salary} onChange={(e) => {this.handleInputChange(e)}}
-                         className={errors.salary ? 'error-control' : 'form-control'}
-                         placeholder={errors.salary ? errors.salary.message : "Enter your salary"} />
+                        <input type = "text" 
+                         id="salary" 
+                         name="salary" 
+                         value={this.state.salary} 
+                         onFocus={(e)=>{this.resetState(e)}} 
+                         onChange={(e) => {this.handleInputChange(e)}}
+                         className= 'form-control'
+                         placeholder="Enter your salary" />
+                        {this.state.errorSalary.valid ? null : <span> {this.state.errorSalary.errMessage}</span> }                    
                     </label> <br/><br/>
 
                     <label htmlFor="isGoldClient">E client Gold:
                         <input type="checkbox" id="isGoldClient" name="isGoldClient" checked={this.state.isGoldclient} onChange={(e) => {this.handleInputChange(e)}}/>
                     </label> <br/><br/>
     
-                    <input disabled={isDisabled} type="submit" value="Submit" className = "customButton"/>
+                    <input className="customButton" type="submit" value="Submit"/>
 
                 
              </form>

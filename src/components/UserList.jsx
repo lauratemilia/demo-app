@@ -1,33 +1,13 @@
-
 import React from "react"
 import UserItem from "./UserItem"
 
 
-class  UserList extends React.Component {  
-
-    constructor(props){
-        super(props)
+class  UserList extends React.Component {   
+     
+    showUsers(){
+        return <div id="usersList" ><UserList users = {this.state.users}/></div>
+        
     }
-
- 
-    
-  componentDidMount(){
-
-  }
-
-  componentWillUnmount(){
-  }
-
-  componentDidUpdate(){
-
-  }
-  
-  
-  showUsers(){
-    return <div id="usersList" ><UserList users = {this.state.users}/></div>
-    
-  }
-
 
     render(){
         
