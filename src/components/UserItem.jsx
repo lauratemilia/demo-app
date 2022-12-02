@@ -35,7 +35,7 @@ class UserItem extends React.Component{
                    </div>
                    <div id="userImg"><img src={this.props.picture} alt = "" width = "100" height="150"/></div> 
                 </div>
-                <button value={this.props.name} onClick={(e) => this.handleDeleteUser(e)}>Delete</button>
+                <button className = "customButton" value={this.props.name} onClick={(e) => this.handleDeleteUser(e)}>Delete</button>
             </div>
         ); 
       }           

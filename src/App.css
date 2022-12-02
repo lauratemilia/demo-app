@@ -40,6 +40,12 @@
   }
 }
 
+#showUsersButton, #showPostsButton {
+  border-radius: 0.375rem;
+  margin:20px;
+
+}
+
 #user, #post {
   display: inline-block;
   padding: 10px;
@@ -59,9 +65,12 @@
   margin: 10px;
 }
 
-
+.user-add-form {
+  margin: 20px;
+}
 
 #post {
+  border-radius: 0.375rem;
   background-color: #a2b1fc;
 }
 
@@ -81,7 +90,45 @@
 }
 
 .error-control {
-  border: 1px solid red
+  border: 1px solid red;
+  color:black;
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  background-color: #fff;
+  background-clip: padding-box;
+  appearance: none;
+  border-radius: 0.375rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.customButton, .colorInput {
+  border: 1px solid black;
+  color:black;
+  display: block;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  background-color: rgba(255, 255, 255);
+  background-clip: padding-box;
+  appearance: none;
+  border-radius: 0.375rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  margin:auto;
+}
+
+.colorInput {
+  margin:  10px auto auto auto;
+  padding:0.2rem;
+}
+
+.colorInputsContainer {
+  margin: auto 50px;
+  display: inline-block;
 }
 
 @media screen and (max-width:800px) {

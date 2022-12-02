@@ -106,7 +106,7 @@ class UserAddForm extends React.Component{
                         <input type="checkbox" id="isGoldClient" name="isGoldClient" checked={this.state.isGoldclient} onChange={(e) => {this.handleInputChange(e)}}/>
                     </label> <br/><br/>
     
-                    <input disabled={isDisabled} type="submit" value="Submit"/>
+                    <input disabled={isDisabled} type="submit" value="Submit" className = "customButton"/>
 
                 
              </form>
