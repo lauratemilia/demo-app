@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import UserAddForm from './components/UserAddForm';
-import {LoginControl} from './components/LoginControl';
+// import {LoginControl} from './components/LoginControl';
 import UserList from './components/UserList';
 import PostList from './components/PostList';
 
