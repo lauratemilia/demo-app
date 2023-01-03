@@ -96,7 +96,6 @@ class UserAddForm extends React.Component{
       }
 
       handleInputChange(e){
-        e.preventDefault();
 
         if(e.target.id === "isGoldClient"){
           this.setState({[e.target.id]: e.target.checked})
